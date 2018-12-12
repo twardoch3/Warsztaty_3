@@ -35,6 +35,8 @@ class RoomAddEditView(View):
         except Exception:
             error = 'Error! Name must start with letter. Marks like "?#$...etc not allowed'
             ctx = {'error': error}
+            if id:
+                ctx['room'] =Room.objects.get(pk=id)
             return render(request, self.template_name, ctx)
 
         cp = request.POST.get('capacity')
