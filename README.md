@@ -10,10 +10,15 @@ Create database 'warsztaty_django1' with tables for rooms and reservations. Inst
 pip install -r requirements.txt
 ```
 ### Running the program
+Apply the migrations:
+```
+python manage.py migrate
+```
 Starts a development Web server on the local machine with command:
 ```
 python manage.py runserver
 ```
+
 ### Usage Examples:
 Create room:
 ```
