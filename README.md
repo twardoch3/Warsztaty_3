@@ -14,7 +14,7 @@ Apply the migrations:
 ```
 python manage.py migrate
 ```
-Starts a development Web server on the local machine with command:
+Start a development Web server on the local machine with command:
 ```
 python manage.py runserver
 ```
