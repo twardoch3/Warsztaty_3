@@ -36,7 +36,7 @@ class RoomAddEditView(View):
             error = 'Error! Name must start with letter. Marks like "?#$...etc not allowed'
             ctx = {'error': error}
             if id:
-                ctx['room'] =Room.objects.get(pk=id)
+                ctx['room'] = Room.objects.get(pk=id)
             return render(request, self.template_name, ctx)
 
         cp = request.POST.get('capacity')
@@ -59,6 +59,8 @@ class RoomAddEditView(View):
         except Exception:
             error = "Error! Duplicate name or invalid capacity entered."
             ctx = {'error': error}
+            if id:
+                ctx['room'] = Room.objects.get(pk=id)
             return render(request, self.template_name, ctx)
 
         return redirect(reverse('all_rooms'))
@@ -77,12 +79,13 @@ class OneRoom(View):
         d = request.POST.get('date')
         c = request.POST.get('comment')
         dnr = request.POST.get('days_number')
-        a_rvd = [True if Reservation.objects.filter(room=room,
-                                                    date=Reservation.strdate_to_dateformat(d) + datetime.timedelta(
-                                                        days=i)) else False for i in
-                 range(int(dnr))]
+
         error = None
         if d:
+            a_rvd = [True if Reservation.objects.filter(room=room,
+                                                        date=Reservation.strdate_to_dateformat(d) + datetime.timedelta(
+                                                            days=i)) else False for i in
+                     range(int(dnr))]
             if Reservation.is_past_date(d):
                 error = "Error! Date can't be from the past."
             elif any(a_rvd):  # database Integrity Error
@@ -99,7 +102,6 @@ class OneRoom(View):
             ctx = {'error': error, 'mr': True, 'room': room}
             return render(request, self.template_name, ctx)
         return redirect(reverse('room_reservations', kwargs={'room_id': room.id}))
-
 
 
 class DeleteRoomView(DeleteView):
