@@ -1,0 +1,39 @@
+{% extends 'conference_room/base.html' %}
+{% block title %}Create Conference Room{% endblock title %}
+{% block content %}
+    <h3>{{ txt }} Conference Room</h3>
+    <div>
+        {{ error }}
+        <form method="post" action="#">
+            <label>Name<br>
+                <input class="form-control" name="name" type="text" value="{{ room.name }}" required/><br>
+            </label><br>
+            <label>Capacity<br>
+                <input class="form-control" name="capacity" type="number" value="{{ room.capacity }}" required/><br>
+            </label><br>
+
+            {% if room.projector %}
+                <div class="form-check">
+                    <input class="form-check-input" name="projector" type="checkbox" value="True" id="defaultCheck1"
+                           checked>
+                    <label class="form-check-label" for="defaultCheck1">
+                        Projector
+                    </label>
+                </div>
+            {% else %}
+                <div class="form-check">
+                    <input class="form-check-input" name="projector" type="checkbox" value="True" id="defaultCheck1">
+                    <label class="form-check-label" for="defaultCheck1">
+                        Projector
+                    </label>
+                </div>
+
+            {% endif %}
+            <br>
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit" name="submit"> Submit</button>
+
+            {% csrf_token %}
+        </form>
+
+    </div>
+{% endblock %}

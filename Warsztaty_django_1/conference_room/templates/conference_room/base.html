@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} Conference Rooms Home {% endblock %}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+<body>
+
+<nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand" href="{% url 'all_rooms' %}">
+        <button type="button" class="btn btn-success text-white">Rooms</button>
+    </a>
+    <a class="navbar-brand" href="{% url 'new_room' %}">
+        <button type="button" class="btn btn-success text-white">New Room</button>
+    </a>
+    <span class="navbar-brand mb-0 h1">Search for Conference Room</span>
+
+    <!-- Search Form -->
+    <form action="{% url 'search_room' %}" class="form-inline" method="get">
+        <label>Room Name#<input name="name" class="form-control mr-sm-2" type="text"/></label>
+        <label>Minimal Capacity# <input name="capacity" class="form-control mr-sm-2" type="number"/></label>
+        <label>Available on Day(Date)# <input name="date" class="form-control mr-sm-2" type="date"/></label>
+        <label>Projector#</label>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="projector" id="inlineRadio1" value="Yes">
+            <label class="form-check-label" for="inlineRadio1">Yes</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="projector" id="inlineRadio2" value="No">
+            <label class="form-check-label" for="inlineRadio2">No</label>
+        </div>
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit"> Search</button>
+        {% csrf_token %}
+    </form>
+</nav>
+<div class="jumbotron jumbotron-fluid bg-success text-white">
+    <div class="container">
+        <h1 class="display-4">Conference Room Reservation </h1>
+        <h4>Warsztaty Django 1</h4>
+        <p class="lead">Application to manage conference rooms and their revervations</p>
+    </div>
+</div>
+
+<br>
+<div class="container">
+    {% block content %}
+        <h3>Conference Rooms List - Availability Today - {{ today|date:"Y F d, l"}} </h3>
+
+        <table class="table table-hover">
+            <thead>
+            <tr class="bg-success text-white">
+                <th scope="col">ID</th>
+                <th scope="col">Room Name</th>
+                <th scope="col">Availability</th>
+                <th scope="col">Edit Room</th>
+                <th scope="col">Delete Room</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for room in rooms_list %}
+                <tr>
+                    <th scope="row">{{ room.id }}</th>
+                    <td><a href="{% url 'room_details' room.pk %}">{{ room }}</a></td>
+                    <td>{{ room.room_today_status }}</td>
+                    <td><a href="{% url 'edit_room' room.id %}">Edit</a></td>
+                    <td><a href="{% url 'delete_room' room.id %}">Delete</a></td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td>Empty Table - Create Rooms</td>
+                </tr>
+
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <p><a href="{% url 'new_room' %}">Create New Room</a></p>
+
+
+
+
+    {% endblock %}
+</div>
+
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+</body>
+</html>

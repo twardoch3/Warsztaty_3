@@ -1,0 +1,18 @@
+<h3>Create Reservation</h3>
+<form method="post" action="#">
+    <label>Date from<br>
+        <input class="form-control" name="date" type="date" min="{{ today|date:"Y-m-d" }}"/><br>
+    </label><br>
+    <label>Number of consecutive days
+        <select class="form-control" name="days_number">
+             <option>1</option>
+             <option>2</option>
+             <option>3</option>
+        </select><br>
+        </label><br>
+    <label>Comment<br>
+        <input class="form-control" name="comment" type="text"/><br>
+    </label><br>
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit" name="submit"> Reserve</button>
+    {% csrf_token %}
+</form>
