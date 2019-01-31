@@ -1,5 +1,5 @@
 # Warsztaty_3.1 - Django Basics Module - Conference Rooms Application
-Application allows to manage conference rooms and their reservations (add, edit or delete rooms, reservations).
+This Application allows to manage conference rooms and their reservations (add, edit or delete rooms, reservations).
 
 ### Requirements
 Program requires PostgreSQL database and Django.
