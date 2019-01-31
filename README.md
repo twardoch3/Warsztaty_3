@@ -20,7 +20,11 @@ python manage.py runserver
 ```
 
 ### Usage Examples:
-Create room:
+Create a room:
 ```
 http://127.0.0.1:8000/room/new/
+```
+Check room reservations:
+```
+http://127.0.0.1:8000/reservations/<int:room_id>/
 ```
